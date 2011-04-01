@@ -1,0 +1,7 @@
+name: Minestalker
+main: yetanotherx.bukkitplugin.Minestalker.Minestalker
+version: 1.0
+commands:
+    stalk:
+        description: Get information about the last log in of a certain user. Type -optout as the username to prevent people from stalking you.
+        usage: /<command> [username]
