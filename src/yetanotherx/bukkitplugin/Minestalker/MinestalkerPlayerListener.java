@@ -30,22 +30,22 @@ import org.bukkit.event.player.PlayerQuitEvent;
  */
 public class MinestalkerPlayerListener extends PlayerListener{
 
-	public MinestalkerPlayerListener() {
-	}
-	
-	/**
-	 * 
-	 * Called when a player quits, updates the database file
-	 * 
-	 */
-	public void onPlayerQuit(PlayerQuitEvent event) {
-		
-		String player = event.getPlayer().getName();
-		long timestamp = System.currentTimeMillis();
-		
-		Minestalker.seenconfig.setProperty( player, timestamp );
-		Minestalker.seenconfig.save();
-        
+    public MinestalkerPlayerListener() {
+    }
+
+    /**
+     * 
+     * Called when a player quits, updates the database file
+     * 
+     */
+    public void onPlayerQuit(PlayerQuitEvent event) {
+
+	String player = event.getPlayer().getName();
+	long timestamp = System.currentTimeMillis();
+
+	Minestalker.seenconfig.setProperty( player, timestamp );
+	Minestalker.seenconfig.save();
+
     }	
 
 
