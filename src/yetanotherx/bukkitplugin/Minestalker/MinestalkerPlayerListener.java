@@ -1,7 +1,7 @@
 package yetanotherx.bukkitplugin.Minestalker;
 
-import org.bukkit.event.player.PlayerEvent;
 import org.bukkit.event.player.PlayerListener;
+import org.bukkit.event.player.PlayerQuitEvent;
 
 /*
  * Minestalker Version 1.0 - Check last time user was online
@@ -38,7 +38,7 @@ public class MinestalkerPlayerListener extends PlayerListener{
 	 * Called when a player quits, updates the database file
 	 * 
 	 */
-	public void onPlayerQuit(PlayerEvent event) {
+	public void onPlayerQuit(PlayerQuitEvent event) {
 		
 		String player = event.getPlayer().getName();
 		long timestamp = System.currentTimeMillis();
