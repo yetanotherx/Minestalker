@@ -23,7 +23,7 @@ import com.nijiko.permissions.PermissionHandler;
 import com.nijikokun.bukkit.Permissions.Permissions;
 
 /*
- * Minestalker Version 1.0 - Check last time user was online
+ * Minestalker Version 1.1 - Check last time user was online
  * Copyright (C) 2011 Yetanotherx <yetanotherx -a--t- gmail -dot- com>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -71,6 +71,7 @@ public class Minestalker extends JavaPlugin {
     /**
      * Outputs a message when disabled
      */
+    @Override
     public void onDisable() {
 	log.info(this.getDescription().getName() + " version " + this.getDescription().getVersion() + "disabled.");
     }
@@ -93,8 +94,7 @@ public class Minestalker extends JavaPlugin {
 	    }
 	    else {
 		//Permissions not found. Disable plugin
-		log.info(pdfFile.getName() + " version " + pdfFile.getVersion() + "not enabled. Permissions not detected");
-		this.getServer().getPluginManager().disablePlugin(this);
+		log.info("Permissions not found. Using ops.txt");
 	    }
 	}
     }
@@ -105,6 +105,7 @@ public class Minestalker extends JavaPlugin {
      * Hook the events into the plugin manager
      * 
      */
+    @Override
     public void onEnable() {
 
 	setupPermissions();
@@ -153,6 +154,7 @@ public class Minestalker extends JavaPlugin {
     /**
      * Called when a user performs a command
      */
+    @Override
     public boolean onCommand(CommandSender sender, Command command, String commandLabel, String[] args) {
 
 	String[] split = args;
@@ -169,7 +171,7 @@ public class Minestalker extends JavaPlugin {
 		    player.sendMessage(ChatColor.RED + "/stalk -optout" + ChatColor.WHITE + "  -  Prevent users from checking your login time");
 		    player.sendMessage(ChatColor.RED + "/stalk -optin" + ChatColor.WHITE + "  -  Allow users to check your login time (after opting out)");
 		} 
-		else if (split.length == 1 && split[0].equalsIgnoreCase("-optin") && Permissions.has(player, "minestalker.optin")) {
+		else if (split.length == 1 && split[0].equalsIgnoreCase("-optin") && permission(player, "minestalker.optin")) {
 
 		    optoutconfig.load();
 		    optoutconfig.setProperty(player.getName(), false );
@@ -178,7 +180,7 @@ public class Minestalker extends JavaPlugin {
 		    player.sendMessage( ChatColor.WHITE + "You have opted in to login stalking");
 
 		}
-		else if (split.length == 1 && split[0].equalsIgnoreCase("-optout") && Permissions.has(player, "minestalker.optout")) {
+		else if (split.length == 1 && split[0].equalsIgnoreCase("-optout") && permission(player, "minestalker.optout")) {
 
 		    optoutconfig.load();
 		    optoutconfig.setProperty(player.getName(), true );
@@ -187,7 +189,7 @@ public class Minestalker extends JavaPlugin {
 		    player.sendMessage( ChatColor.WHITE + "You have opted out of login stalking");
 
 		}
-		else if (split.length == 1 && Permissions.has(player, "minestalker.use") ) {
+		else if (split.length == 1 && permission(player, "minestalker.use") ) {
 
 		    Player target = this.getServer().getPlayer( split[0] );
 
@@ -225,5 +227,12 @@ public class Minestalker extends JavaPlugin {
 	    }
 	}
 	return false;
+    }
+
+    public boolean permission( Player player, String permission ) {
+        if( Permissions == null ) {
+            return player.isOp();
+        }
+        return Permissions.has(player, permission);
     }
 }

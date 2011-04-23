@@ -4,7 +4,7 @@ import org.bukkit.event.player.PlayerListener;
 import org.bukkit.event.player.PlayerQuitEvent;
 
 /*
- * Minestalker Version 1.0 - Check last time user was online
+ * Minestalker Version 1.1 - Check last time user was online
  * Copyright (C) 2011 Yetanotherx <yetanotherx -a--t- gmail -dot- com>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -38,6 +38,7 @@ public class MinestalkerPlayerListener extends PlayerListener{
      * Called when a player quits, updates the database file
      * 
      */
+    @Override
     public void onPlayerQuit(PlayerQuitEvent event) {
 
 	String player = event.getPlayer().getName();
